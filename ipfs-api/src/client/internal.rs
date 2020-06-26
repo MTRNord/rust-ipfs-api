@@ -164,7 +164,6 @@ impl IpfsClient {
 
     /// Builds an Api error from a response body.
     ///
-    #[inline]
     fn process_error_from_body(body: Bytes) -> Error {
         match serde_json::from_slice(&body) {
             Ok(e) => Error::Api(e),
@@ -439,7 +438,6 @@ impl IpfsClient {
     /// let res = client.add(data);
     /// ```
     ///
-    #[inline]
     pub async fn add<R>(&self, data: R) -> Result<response::AddResponse, Error>
     where
         R: 'static + Read + Send + Sync,
@@ -465,7 +463,6 @@ impl IpfsClient {
     /// let res = client.add_path(path);
     /// ```
     ///
-    #[inline]
     pub async fn add_path<P>(&self, path: P) -> Result<Vec<response::AddResponse>, Error>
     where
         P: AsRef<Path>,
@@ -531,7 +528,6 @@ impl IpfsClient {
     /// let res = client.bitswap_ledger("QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ");
     /// ```
     ///
-    #[inline]
     pub async fn bitswap_ledger(
         &self,
         peer: &str,
@@ -550,7 +546,6 @@ impl IpfsClient {
     /// let res = client.bitswap_reprovide();
     /// ```
     ///
-    #[inline]
     pub async fn bitswap_reprovide(&self) -> Result<response::BitswapReprovideResponse, Error> {
         self.request_empty(request::BitswapReprovide, None).await
     }
@@ -566,7 +561,6 @@ impl IpfsClient {
     /// let res = client.bitswap_stat();
     /// ```
     ///
-    #[inline]
     pub async fn bitswap_stat(&self) -> Result<response::BitswapStatResponse, Error> {
         self.request(request::BitswapStat, None).await
     }
@@ -582,7 +576,6 @@ impl IpfsClient {
     /// let res = client.bitswap_unwant("QmXdNSQx7nbdRvkjGCEQgVjVtVwsHvV8NmV2a8xzQVwuFA");
     /// ```
     ///
-    #[inline]
     pub async fn bitswap_unwant(
         &self,
         key: &str,
@@ -604,7 +597,6 @@ impl IpfsClient {
     /// );
     /// ```
     ///
-    #[inline]
     pub async fn bitswap_wantlist(
         &self,
         peer: Option<&str>,
@@ -628,7 +620,6 @@ impl IpfsClient {
     ///     .try_concat();
     /// ```
     ///
-    #[inline]
     pub fn block_get(&self, hash: &str) -> impl Stream<Item = Result<Bytes, Error>> {
         impl_stream_api_response! {
             (self, request::BlockGet { hash }, None) => request_stream_bytes
@@ -648,7 +639,6 @@ impl IpfsClient {
     /// let res = client.block_put(data);
     /// ```
     ///
-    #[inline]
     pub async fn block_put<R>(&self, data: R) -> Result<response::BlockPutResponse, Error>
     where
         R: 'static + Read + Send + Sync,
@@ -671,7 +661,6 @@ impl IpfsClient {
     /// let res = client.block_rm("QmXdNSQx7nbdRvkjGCEQgVjVtVwsHvV8NmV2a8xzQVwuFA");
     /// ```
     ///
-    #[inline]
     pub async fn block_rm(&self, hash: &str) -> Result<response::BlockRmResponse, Error> {
         self.request(request::BlockRm { hash }, None).await
     }
@@ -687,7 +676,6 @@ impl IpfsClient {
     /// let res = client.block_stat("QmXdNSQx7nbdRvkjGCEQgVjVtVwsHvV8NmV2a8xzQVwuFA");
     /// ```
     ///
-    #[inline]
     pub async fn block_stat(&self, hash: &str) -> Result<response::BlockStatResponse, Error> {
         self.request(request::BlockStat { hash }, None).await
     }
@@ -703,7 +691,6 @@ impl IpfsClient {
     /// let res = client.bootstrap_add_default();
     /// ```
     ///
-    #[inline]
     pub async fn bootstrap_add_default(
         &self,
     ) -> Result<response::BootstrapAddDefaultResponse, Error> {
@@ -721,7 +708,6 @@ impl IpfsClient {
     /// let res = client.bootstrap_list();
     /// ```
     ///
-    #[inline]
     pub async fn bootstrap_list(&self) -> Result<response::BootstrapListResponse, Error> {
         self.request(request::BootstrapList, None).await
     }
@@ -737,7 +723,6 @@ impl IpfsClient {
     /// let res = client.bootstrap_rm_all();
     /// ```
     ///
-    #[inline]
     pub async fn bootstrap_rm_all(&self) -> Result<response::BootstrapRmAllResponse, Error> {
         self.request(request::BootstrapRmAll, None).await
     }
@@ -758,7 +743,6 @@ impl IpfsClient {
     ///     .try_concat();
     /// ```
     ///
-    #[inline]
     pub fn cat(&self, path: &str) -> impl Stream<Item = Result<Bytes, Error>> {
         impl_stream_api_response! {
             (self, request::Cat { path }, None) => request_stream_bytes
@@ -774,7 +758,6 @@ impl IpfsClient {
     /// let res = client.commands();
     /// ```
     ///
-    #[inline]
     pub async fn commands(&self) -> Result<response::CommandsResponse, Error> {
         self.request(request::Commands, None).await
     }
@@ -788,7 +771,6 @@ impl IpfsClient {
     /// let res = client.config_edit();
     /// ```
     ///
-    #[inline]
     pub async fn config_edit(&self) -> Result<response::ConfigEditResponse, Error> {
         self.request(request::ConfigEdit, None).await
     }
@@ -804,7 +786,6 @@ impl IpfsClient {
     /// let res = client.config_replace(config);
     /// ```
     ///
-    #[inline]
     pub async fn config_replace<R>(&self, data: R) -> Result<response::ConfigReplaceResponse, Error>
     where
         R: 'static + Read + Send + Sync,
@@ -827,7 +808,6 @@ impl IpfsClient {
     /// let res = client.config_show();
     /// ```
     ///
-    #[inline]
     pub async fn config_show(&self) -> Result<response::ConfigShowResponse, Error> {
         self.request_string(request::ConfigShow, None).await
     }
@@ -841,7 +821,6 @@ impl IpfsClient {
     /// let res = client.dag_get("QmXdNSQx7nbdRvkjGCEQgVjVtVwsHvV8NmV2a8xzQVwuFA");
     /// ```
     ///
-    #[inline]
     pub async fn dag_get(&self, path: &str) -> Result<response::DagGetResponse, Error> {
         self.request(request::DagGet { path }, None).await
     }
@@ -876,7 +855,6 @@ impl IpfsClient {
     /// let res = client.dht_findpeer(peer).try_collect::<Vec<_>>();
     /// ```
     ///
-    #[inline]
     pub fn dht_findpeer(
         &self,
         peer: &str,
@@ -897,7 +875,6 @@ impl IpfsClient {
     /// let res = client.dht_findprovs(key).try_collect::<Vec<_>>();
     /// ```
     ///
-    #[inline]
     pub fn dht_findprovs(
         &self,
         key: &str,
@@ -918,7 +895,6 @@ impl IpfsClient {
     /// let res = client.dht_get(key).try_collect::<Vec<_>>();
     /// ```
     ///
-    #[inline]
     pub fn dht_get(
         &self,
         key: &str,
@@ -939,7 +915,6 @@ impl IpfsClient {
     /// let res = client.dht_provide(key).try_collect::<Vec<_>>();
     /// ```
     ///
-    #[inline]
     pub fn dht_provide(
         &self,
         key: &str,
@@ -959,7 +934,6 @@ impl IpfsClient {
     /// let res = client.dht_put("test", "Hello World!").try_collect::<Vec<_>>();
     /// ```
     ///
-    #[inline]
     pub fn dht_put(
         &self,
         key: &str,
@@ -981,7 +955,6 @@ impl IpfsClient {
     /// let res = client.dht_query(peer).try_collect::<Vec<_>>();
     /// ```
     ///
-    #[inline]
     pub fn dht_query(
         &self,
         peer: &str,
@@ -1000,7 +973,6 @@ impl IpfsClient {
     /// let res = client.diag_cmds_clear();
     /// ```
     ///
-    #[inline]
     pub async fn diag_cmds_clear(&self) -> Result<response::DiagCmdsClearResponse, Error> {
         self.request_empty(request::DiagCmdsClear, None).await
     }
@@ -1014,7 +986,6 @@ impl IpfsClient {
     /// let res = client.diag_cmds_set_time("1m");
     /// ```
     ///
-    #[inline]
     pub async fn diag_cmds_set_time(
         &self,
         time: &str,
@@ -1036,7 +1007,6 @@ impl IpfsClient {
     /// let res = client.diag_sys();
     /// ```
     ///
-    #[inline]
     pub async fn diag_sys(&self) -> Result<response::DiagSysResponse, Error> {
         self.request_string(request::DiagSys, None).await
     }
@@ -1050,7 +1020,6 @@ impl IpfsClient {
     /// let res = client.dns("ipfs.io", true);
     /// ```
     ///
-    #[inline]
     pub async fn dns(&self, link: &str, recursive: bool) -> Result<response::DnsResponse, Error> {
         self.request(request::Dns { link, recursive }, None).await
     }
@@ -1064,7 +1033,6 @@ impl IpfsClient {
     /// let res = client.file_ls("/ipns/ipfs.io");
     /// ```
     ///
-    #[inline]
     pub async fn file_ls(&self, path: &str) -> Result<response::FileLsResponse, Error> {
         self.request(request::FileLs { path }, None).await
     }
@@ -1078,7 +1046,6 @@ impl IpfsClient {
     /// let res = client.files_cp("/path/to/file", "/dest");
     /// ```
     ///
-    #[inline]
     pub async fn files_cp(
         &self,
         path: &str,
@@ -1098,7 +1065,6 @@ impl IpfsClient {
     /// let res = client.files_flush(Some("/tmp"));
     /// ```
     ///
-    #[inline]
     pub async fn files_flush(
         &self,
         path: Option<&str>,
@@ -1116,7 +1082,6 @@ impl IpfsClient {
     /// let res = client.files_ls(Some("/tmp"));
     /// ```
     ///
-    #[inline]
     pub async fn files_ls(&self, path: Option<&str>) -> Result<response::FilesLsResponse, Error> {
         self.request(request::FilesLs { path }, None).await
     }
@@ -1131,7 +1096,6 @@ impl IpfsClient {
     /// let res = client.files_mkdir("/test/nested/dir", true);
     /// ```
     ///
-    #[inline]
     pub async fn files_mkdir(
         &self,
         path: &str,
@@ -1150,7 +1114,6 @@ impl IpfsClient {
     /// let res = client.files_mv("/test/tmp.json", "/test/file.json");
     /// ```
     ///
-    #[inline]
     pub async fn files_mv(
         &self,
         path: &str,
@@ -1169,7 +1132,6 @@ impl IpfsClient {
     /// let res = client.files_read("/test/file.json");
     /// ```
     ///
-    #[inline]
     pub fn files_read(&self, path: &str) -> impl Stream<Item = Result<Bytes, Error>> {
         impl_stream_api_response! {
             (self, request::FilesRead { path }, None) => request_stream_bytes
@@ -1186,7 +1148,6 @@ impl IpfsClient {
     /// let res = client.files_rm("/test/file.json", false);
     /// ```
     ///
-    #[inline]
     pub async fn files_rm(
         &self,
         path: &str,
@@ -1205,7 +1166,6 @@ impl IpfsClient {
     /// let res = client.files_stat("/test/file.json");
     /// ```
     ///
-    #[inline]
     pub async fn files_stat(&self, path: &str) -> Result<response::FilesStatResponse, Error> {
         self.request(request::FilesStat { path }, None).await
     }
@@ -1221,7 +1181,6 @@ impl IpfsClient {
     /// let res = client.files_write("/test/file.json", true, true, file);
     /// ```
     ///
-    #[inline]
     pub async fn files_write<R>(
         &self,
         path: &str,
@@ -1230,7 +1189,7 @@ impl IpfsClient {
         data: R,
     ) -> Result<response::FilesWriteResponse, Error>
     where
-        R: 'static + Read + Send + Sync,
+        R: Read + Send + Sync,
     {
         let mut form = multipart::Form::default();
 
@@ -1256,7 +1215,6 @@ impl IpfsClient {
     /// let res = client.filestore_dups();
     /// ```
     ///
-    #[inline]
     pub fn filestore_dups(
         &self,
     ) -> impl Stream<Item = Result<response::FilestoreDupsResponse, Error>> {
@@ -1276,7 +1234,6 @@ impl IpfsClient {
     /// );
     /// ```
     ///
-    #[inline]
     pub fn filestore_ls(
         &self,
         cid: Option<&str>,
@@ -1295,7 +1252,6 @@ impl IpfsClient {
     /// let res = client.filestore_verify(None);
     /// ```
     ///
-    #[inline]
     pub fn filestore_verify(
         &self,
         cid: Option<&str>,
@@ -1314,7 +1270,6 @@ impl IpfsClient {
     /// let res = client.get("/test/file.json");
     /// ```
     ///
-    #[inline]
     pub fn get(&self, path: &str) -> impl Stream<Item = Result<Bytes, Error>> {
         impl_stream_api_response! {
             (self, request::Get { path }, None) => request_stream_bytes
@@ -1333,7 +1288,6 @@ impl IpfsClient {
     /// let res = client.id(Some("QmSoLPppuBtQSGwKDZT2M73ULpjvfd3aZ6ha4oFGL1KrGM"));
     /// ```
     ///
-    #[inline]
     pub async fn id(&self, peer: Option<&str>) -> Result<response::IdResponse, Error> {
         self.request(request::Id { peer }, None).await
     }
@@ -1347,7 +1301,6 @@ impl IpfsClient {
     /// let res = client.key_gen("test", KeyType::Rsa, 64);
     /// ```
     ///
-    #[inline]
     pub async fn key_gen(
         &self,
         name: &str,
@@ -1367,7 +1320,6 @@ impl IpfsClient {
     /// let res = client.key_list();
     /// ```
     ///
-    #[inline]
     pub async fn key_list(&self) -> Result<response::KeyListResponse, Error> {
         self.request(request::KeyList, None).await
     }
@@ -1381,7 +1333,6 @@ impl IpfsClient {
     /// let res = client.key_rename("key_0", "new_name", false);
     /// ```
     ///
-    #[inline]
     pub async fn key_rename(
         &self,
         name: &str,
@@ -1401,7 +1352,6 @@ impl IpfsClient {
     /// let res = client.key_rm("key_0");
     /// ```
     ///
-    #[inline]
     pub async fn key_rm(&self, name: &str) -> Result<response::KeyRmResponse, Error> {
         self.request(request::KeyRm { name }, None).await
     }
@@ -1420,7 +1370,6 @@ impl IpfsClient {
     /// );
     /// ```
     ///
-    #[inline]
     pub async fn log_level(
         &self,
         logger: request::Logger<'_>,
@@ -1439,7 +1388,6 @@ impl IpfsClient {
     /// let res = client.log_ls();
     /// ```
     ///
-    #[inline]
     pub async fn log_ls(&self) -> Result<response::LogLsResponse, Error> {
         self.request(request::LogLs, None).await
     }
@@ -1473,7 +1421,6 @@ impl IpfsClient {
     /// let res = client.ls(Some("/ipfs/QmVrLsEDn27sScp3k23sgZNefVTjSAL3wpgW1iWPi4MgoY"));
     /// ```
     ///
-    #[inline]
     pub async fn ls(&self, path: Option<&str>) -> Result<response::LsResponse, Error> {
         self.request(request::Ls { path }, None).await
     }
@@ -1555,7 +1502,6 @@ impl IpfsClient {
     /// let res = client.object_data("/ipfs/QmVrLsEDn27sScp3k23sgZNefVTjSAL3wpgW1iWPi4MgoY");
     /// ```
     ///
-    #[inline]
     pub fn object_data(&self, key: &str) -> impl Stream<Item = Result<Bytes, Error>> {
         impl_stream_api_response! {
             (self, request::ObjectData { key }, None) => request_stream_bytes
@@ -1574,7 +1520,6 @@ impl IpfsClient {
     /// );
     /// ```
     ///
-    #[inline]
     pub async fn object_diff(
         &self,
         key0: &str,
@@ -1592,7 +1537,6 @@ impl IpfsClient {
     /// let res = client.object_get("/ipfs/QmVrLsEDn27sScp3k23sgZNefVTjSAL3wpgW1iWPi4MgoY");
     /// ```
     ///
-    #[inline]
     pub async fn object_get(&self, key: &str) -> Result<response::ObjectGetResponse, Error> {
         self.request(request::ObjectGet { key }, None).await
     }
@@ -1606,7 +1550,6 @@ impl IpfsClient {
     /// let res = client.object_links("/ipfs/QmVrLsEDn27sScp3k23sgZNefVTjSAL3wpgW1iWPi4MgoY");
     /// ```
     ///
-    #[inline]
     pub async fn object_links(&self, key: &str) -> Result<response::ObjectLinksResponse, Error> {
         self.request(request::ObjectLinks { key }, None).await
     }
@@ -1621,7 +1564,6 @@ impl IpfsClient {
     /// let res = client.object_new(Some(ObjectTemplate::UnixFsDir));
     /// ```
     ///
-    #[inline]
     pub async fn object_new(
         &self,
         template: Option<request::ObjectTemplate>,
@@ -1648,7 +1590,6 @@ impl IpfsClient {
     /// let res = client.object_stat("/ipfs/QmVrLsEDn27sScp3k23sgZNefVTjSAL3wpgW1iWPi4MgoY");
     /// ```
     ///
-    #[inline]
     pub async fn object_stat(&self, key: &str) -> Result<response::ObjectStatResponse, Error> {
         self.request(request::ObjectStat { key }, None).await
     }
@@ -1682,7 +1623,6 @@ impl IpfsClient {
     /// let client = IpfsClient::default();
     /// let res = client.pin_add("QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ", true);
     /// ```
-    #[inline]
     pub async fn pin_add(
         &self,
         key: &str,
@@ -1713,7 +1653,6 @@ impl IpfsClient {
     /// let res = client.pin_ls(None, Some("direct"));
     /// ```
     ///
-    #[inline]
     pub async fn pin_ls(
         &self,
         key: Option<&str>,
@@ -1738,7 +1677,6 @@ impl IpfsClient {
     /// );
     /// ```
     ///
-    #[inline]
     pub async fn pin_rm(
         &self,
         key: &str,
@@ -1761,7 +1699,6 @@ impl IpfsClient {
     /// let res = client.ping("QmSoLV4Bbm51jM9C4gDYZQ9Cy3U6aXMJDAbzgu2fzaDs64", Some(15));
     /// ```
     ///
-    #[inline]
     pub fn ping(
         &self,
         peer: &str,
@@ -1781,7 +1718,6 @@ impl IpfsClient {
     /// let res = client.pubsub_ls();
     /// ```
     ///
-    #[inline]
     pub async fn pubsub_ls(&self) -> Result<response::PubsubLsResponse, Error> {
         self.request(request::PubsubLs, None).await
     }
@@ -1796,7 +1732,6 @@ impl IpfsClient {
     /// let res = client.pubsub_peers(Some("feed"));
     /// ```
     ///
-    #[inline]
     pub async fn pubsub_peers(
         &self,
         topic: Option<&str>,
@@ -1813,7 +1748,6 @@ impl IpfsClient {
     /// let res = client.pubsub_pub("feed", "Hello World!");
     /// ```
     ///
-    #[inline]
     pub async fn pubsub_pub(
         &self,
         topic: &str,
@@ -1833,7 +1767,6 @@ impl IpfsClient {
     /// let res = client.pubsub_sub("feed", true);
     /// ```
     ///
-    #[inline]
     pub fn pubsub_sub(
         &self,
         topic: &str,
@@ -1853,7 +1786,6 @@ impl IpfsClient {
     /// let res = client.refs_local();
     /// ```
     ///
-    #[inline]
     pub fn refs_local(&self) -> impl Stream<Item = Result<response::RefsLocalResponse, Error>> {
         impl_stream_api_response! {
             (self, request::RefsLocal, None) => request_stream_json
@@ -1894,7 +1826,6 @@ impl IpfsClient {
     /// let res = client.stats_bitswap();
     /// ```
     ///
-    #[inline]
     pub async fn stats_bitswap(&self) -> Result<response::StatsBitswapResponse, Error> {
         self.request(request::StatsBitswap, None).await
     }
@@ -1908,7 +1839,6 @@ impl IpfsClient {
     /// let res = client.stats_bw();
     /// ```
     ///
-    #[inline]
     pub async fn stats_bw(&self) -> Result<response::StatsBwResponse, Error> {
         self.request(request::StatsBw, None).await
     }
@@ -1922,7 +1852,6 @@ impl IpfsClient {
     /// let res = client.stats_repo();
     /// ```
     ///
-    #[inline]
     pub async fn stats_repo(&self) -> Result<response::StatsRepoResponse, Error> {
         self.request(request::StatsRepo, None).await
     }
@@ -1938,7 +1867,6 @@ impl IpfsClient {
     /// let res = client.swarm_addrs_local();
     /// ```
     ///
-    #[inline]
     pub async fn swarm_addrs_local(&self) -> Result<response::SwarmAddrsLocalResponse, Error> {
         self.request(request::SwarmAddrsLocal, None).await
     }
@@ -1960,7 +1888,6 @@ impl IpfsClient {
     /// let res = client.swarm_peers();
     /// ```
     ///
-    #[inline]
     pub async fn swarm_peers(&self) -> Result<response::SwarmPeersResponse, Error> {
         self.request(request::SwarmPeers, None).await
     }
@@ -1979,7 +1906,6 @@ impl IpfsClient {
     /// let res = client.tar_add(tar);
     /// ```
     ///
-    #[inline]
     pub async fn tar_add<R>(&self, data: R) -> Result<response::TarAddResponse, Error>
     where
         R: 'static + Read + Send + Sync,
@@ -2000,7 +1926,6 @@ impl IpfsClient {
     /// let res = client.tar_cat("/ipfs/QmVrLsEDn27sScp3k23sgZNefVTjSAL3wpgW1iWPi4MgoY");
     /// ```
     ///
-    #[inline]
     pub fn tar_cat(&self, path: &str) -> impl Stream<Item = Result<Bytes, Error>> {
         impl_stream_api_response! {
             (self, request::TarCat { path }, None) => request_stream_bytes
@@ -2016,7 +1941,6 @@ impl IpfsClient {
     /// let res = client.version();
     /// ```
     ///
-    #[inline]
     pub async fn version(&self) -> Result<response::VersionResponse, Error> {
         self.request(request::Version, None).await
     }
